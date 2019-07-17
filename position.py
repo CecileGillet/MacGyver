@@ -1,3 +1,6 @@
+from labyrinthe import Labyrinthe
+from hero import Hero
+
 class Position :
     '''Classe qui gére toutes les positions dans le labyrinthe x étant le numéro de ligne et y le numéro de colonne'''
 
@@ -5,32 +8,48 @@ class Position :
         self.x = int(x)
         self.y = int(y)
     
-    def bouger_bas(self):
-        return Position(self.x+1, self.y)
+    def en_bas(self, laby):
+        self.x = self.x + 1
+        print("G")
+        if self.verif_laby(laby) == False:
+            self.x = self.x - 1
 
-    def bouger_haut(self):
-        return Position(self.x-1, self.y)
+    def en_haut(self, laby):
+        self.x = self.x - 1
+        print("G")
+        if self.verif_laby(laby) == False:
+            self.x = self.x +  1
 
-    def bouger_droit(self):
-        return Position(self.x, self.y+1)
+    def a_droite(self, laby):
+        self.y = self.y + 1
+        print("G")
+        if self.verif_laby(laby) == False:
+            self.y = self.y - 1
     
-    def bouger_gauche(self):
-        return Position(self.x, self.y-1)
+    def a_gauche(self, laby):
+        self.y = self.y - 1
+        print("G")
+        if self.verif_laby(laby) == False:
+            self.y = self.y + 1
 
-    def __add__(self, direction):
-        if direction == "Z":
-            return self.bouger_haut()
-        elif direction == "S":
-            return self.bouger_bas()
-        elif direction == "Q":
-            return self.bouger_gauche()
-        elif direction == "D":
-            return self.bouger_droit()
-        else: 
-            print('Les touches pour se déplacer sont Z Q S D')
-
-    def __eq__(self,comparaison):
-        if self.x == comparaison.x and self.y == comparaison.y:
-            return True
+    def verif_laby(self,lab):
+        case = (self.x, self.y)
+        if case in lab.keys():
+            print(lab[case])
+            if lab[case] == 'c':
+                return True
+            else:
+                return False
         else:
-            False
+            print('Hors champs')
+            return False
+    
+    def deplacement(self, direction, laby):
+        if direction == 'Z':
+            return self.en_haut(laby)
+        elif direction == 'S':
+            return self.en_bas(laby)
+        elif direction == 'Q':
+            return self.a_gauche(laby)
+        elif direction == 'D':
+            return self.a_droite(laby)
