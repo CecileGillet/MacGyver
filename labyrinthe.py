@@ -1,18 +1,13 @@
-from position import Position
+from hero import Hero
 
 class Labyrinthe:
 
     def __init__(self, x, y):
-        self.height = None
-        self.width = None
         self.depart = (0, 0)
         self.arriver = (3, 0)
-        self.joueur = None
+        self.joueur = Hero
         self.chemin = 'c'
         self.mur = 'm'
-        # self.objets = []
-        self.x = int(x)
-        self.y = int(y)
 
     mon_labyrinthe = {
         (0,0): 'd', (0,1): 'c', (0,2): 'm', (0,3): 'c', (0,4): 'c', (0,5): 'c',
@@ -29,25 +24,6 @@ class Labyrinthe:
             print(self.mon_labyrinthe[0,0])
         else:
             print('Tu n\'est pas sur le départ')
-        
-    # def partie(self):
-    #     self.action = True
-    #     while self.action:
-    #         if self.joueur == 'G':
-    #             self.action = False
-    #             print('Fin de la partie')
-    #         else:
-    #             self
-
-    def limite_laby(self, x, y):
-        self.x = self.width
-        self.y = self.height
-        if x and y <= 5 in self.mon_labyrinthe.keys():
-            print('Tu est dans le labyrinthe')
-            return True
-        else:
-            print('Tu est hors jeu')
-            return False
             
     def deplacement_joueur(self):
         self.joueur = input('Choisir une direction. z : en haut, s : en bas, q : à gauche, d : à droite').upper()
@@ -58,3 +34,15 @@ class Labyrinthe:
             else:
                 print('Tu dois sélectionner une direction valide')
             return self.joueur
+
+    def verif_laby(self, x, y):
+        case = (x, y)
+        if case in self.mon_labyrinthe.keys():
+            print(self.mon_labyrinthe[case])
+            if self.mon_labyrinthe[case] == 'c':
+                return True
+            else:
+                return False
+        else:
+            print('Hors champs')
+            return False
