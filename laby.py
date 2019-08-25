@@ -19,19 +19,24 @@ Curseur debut de ligne : seek()
 
 Remplacer : replace()
 '''
+
+import random
+
 from position import Position
 from case import Case
+from objets import Objets
+
 
 class Laby:
 
-    def __init__(self):
-        self.mur = []
+    def __init__(self, placer_objets):
+        self.recup_objets = Objets.recup_alea_obj
+        self.cases = []
         self.chemin = []
         self.arriver = None
         self.depart = None
-        # self.height = None
-        # self.width = None
-
+        self.player = None
+        
     def lecture(self):
         #Ouvrir fichier
         with open("laby.txt", "r") as fichier_laby:
@@ -49,14 +54,46 @@ class Laby:
                     elif caractere == 'a':
                         self.arriver = new_case
                         self.chemin.append(new_case)
-                
-                # nb_ligne = self.width
-                # nb_colonne = self.height
-                
-        # for position in self.depart:
-        #     print(position.x, position.y)
 
-    # def controle_deplacement(self):
-    #     case = Position
-    #     if case == 'c':
-    #         print(Position(nb_ligne, num_colonne))
+    # Retirer départ et arriver de la liste des chemins
+    #  def liste_chemin(self):
+    #     case_libre = self.chemin
+
+    #     if self.chemin == 'd':
+    #         self.chemin.pop(case_libre)
+    #     elif self.chemin == "a":
+    #         self.chemin.pop(case_libre)
+    #     return case_libre
+
+
+    # Placer les objets 
+    def placer_objets(self):
+        random_position = self.case_vide_aleatoire()
+
+        for x, objet in self.chemin:
+
+            position = random_position[x]
+            objet.position = position
+
+            for case in self.cases:
+
+                if case.position == objet.position:
+                    case.objet = objet
+                    break
+
+    # Définir la position des cases libres en retirant les cases arriver et depart
+    def case_vide_aleatoire(self):
+        nombre_objets = len(self.recup_objets)
+        cases = random.sample(set(self.cases) - {self.depart, self.arriver}, nombre_objets)
+        positions = [case.position for case in cases]
+
+        return positions
+
+# pour garder l'approche obj avec inependence de classe
+# automatique reconnaissance chemin
+# deplacer logique dans class Laby. une fonction qui permet d'avoir la liste des chemins.
+# technique : tranformer une focntion en attribut 
+# fonction qui renvoit liste des endroits libre. property. ou retourner self.chemin
+# enlever a ou d : prend chemin et qui enleve d et a et renvoit les valeur 
+# ou renvoi case_vide_aleatoire : liste des cases libres sans a et d et renvoyer cette liste et choisir un emplacement.
+# Attention : Indiquer ou son les objets et faire attention au doublon sur meme  case

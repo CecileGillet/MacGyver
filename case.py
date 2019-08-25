@@ -1,4 +1,5 @@
 from position import Position
+from laby import Laby
 
 class Case:
 
@@ -7,6 +8,6 @@ class Case:
         self.entree = False
         self.sortie = False
        
-    def nouvelle_case(self, coordonnee):
-        new_case = Case()        
+    # def nouvelle_case(self, coordonnee):
+    #     new_case = Case()        
 

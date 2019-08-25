@@ -1,5 +1,7 @@
-from laby import Laby
+from objets import Objets
 
-test = Laby()
+test = Objets()
 
-test.lecture()
+test.ajout_img_objet()
+
+# boucle de deplacement qui renvoi le laby et la nouvelle position 
